@@ -29,7 +29,9 @@
 
         </v-app-bar-nav-icon>
 
-        <v-toolbar-title>Ad application</v-toolbar-title>
+        <v-toolbar-title>
+          <router-link to="/" tag="span" class="header_logo">Ad application</router-link>
+        </v-toolbar-title>
 
         <v-spacer></v-spacer>
         <v-toolbar-items class="hidden-sm-and-down">
@@ -90,7 +92,8 @@
     height: auto;
   }
 
-  .v-list-item {
+  .v-list-item,
+  .header_logo {
     cursor: pointer;
   }
 </style>

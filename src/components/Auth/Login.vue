@@ -10,7 +10,6 @@
                         <v-form
                         ref="form"
                         v-model="valid"
-                        :lazy-validation="lazy"
                         >
                             <v-text-field 
                             label="Email" 
@@ -31,17 +30,19 @@
                             prepend-icon="mdi-lock"
                             type="password"
                             v-model="password"
+                            :rules="passwordRules"
                             required
-                            :counter="10"
                             clearable
                             ></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
+                        
                         <v-btn 
                         color="primary"
-                        @click="onSubmit"
+                        @click="onSubmit()"
+                        :disabled="!valid"
                         >Login</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -61,13 +62,31 @@
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
                     ],
                 password:'',
+                passwordRules:[
+                    v=>!!v || "Password is required",
+                    v=>(v && v.length >= 6) || "Password must be longer than 6 characters"
+
+                ],
                 lazy: false
             }
         },
         methods: {
             onSubmit () {
-                this.$refs.form.validate()
+                if(this.$refs.form.validate()) {
+                    let user={
+                        email: this.email,
+                        password: this.password
+                    }
+
+                    console.log(user.password)
+                    
+                    this.reset()
+                }
             },
+            reset(){
+                this.$refs.form.reset()
+            }
+
         }
     }
 </script>
